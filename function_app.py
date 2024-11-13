@@ -25,9 +25,9 @@ def http_trigger2(req: func.HttpRequest) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
     
     name = req.params.get('name')
-    item = container.read_item(item=row_id)
+    item = container_id.read_item(item=row_id)
     item['VisitCount'] += 1
-    container.upsert_item(item)
+    container_id.upsert_item(item)
     if not name:
         try:
             req_body = req.get_json()
