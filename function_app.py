@@ -26,7 +26,7 @@ def http_trigger2(req: func.HttpRequest) -> func.HttpResponse:
     
     name = req.params.get('name')
     item = container.read_item(item=row_id)
-    item['VisitCounter'] += 1
+    item['VisitCount'] += 1
     container.upsert_item(item)
     if not name:
         try:
@@ -38,7 +38,7 @@ def http_trigger2(req: func.HttpRequest) -> func.HttpResponse:
 
     if name:
         #return func.HttpResponse(f"Hello, {name}. This HTTP triggered function executed successfully.")
-        return func.HttpResponse(f"Updated number of visitors: {item['VisitCounter']} ") 
+        return func.HttpResponse(f"Updated number of visitors: {item['VisitCount']} ") 
 
     else:
         return func.HttpResponse(
