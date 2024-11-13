@@ -25,6 +25,9 @@ def http_trigger2(req: func.HttpRequest) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
     
     name = req.params.get('name')
+    item = container.read_item(item=row_id)
+    item['VisitCounter'] += 1
+    container.upsert_item(item)
     if not name:
         try:
             req_body = req.get_json()
@@ -34,7 +37,8 @@ def http_trigger2(req: func.HttpRequest) -> func.HttpResponse:
             name = req_body.get('name')
 
     if name:
-        return func.HttpResponse(f"Hello, {name}. This HTTP triggered function executed successfully.")
+        #return func.HttpResponse(f"Hello, {name}. This HTTP triggered function executed successfully.")
+        return func.HttpResponse(f"Updated number of visitors: {item['VisitCounter']} ") 
 
     else:
         return func.HttpResponse(
