@@ -19,7 +19,7 @@ database_throughput = 1000
 client = CosmosClient(endpoint, credential=key)
 
 app = func.FunctionApp(http_auth_level=func.AuthLevel.ANONYMOUS)
-
+#Adding a test comment
 @app.route(route="http_trigger2")
 def http_trigger2(req: func.HttpRequest) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
