@@ -7,6 +7,7 @@ import asyncio
 
 endpoint = "https://cloudresbackenddb.documents.azure.com:443/"
 key = "DBKEY"
+
 database_id = "webstats"
 container_id = "statsonload"
 partition_key = "/VisitCount"
@@ -25,9 +26,11 @@ def http_trigger2(req: func.HttpRequest) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
     
     name = req.params.get('name')
-    item = container_id.read_item(item=row_id)
+    
+    item = client.read_item(item=row_id)
     item['VisitCount'] += 1
-    container_id.upsert_item(item)
+    client.upsert_item(item)
+    
     if not name:
         try:
             req_body = req.get_json()
