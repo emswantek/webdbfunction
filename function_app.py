@@ -3,14 +3,14 @@ import logging
 from azure.cosmos.aio import CosmosClient
 import os
 
-database_id = "webstats"
-container_id = "statsonload"
+#database_id = "webstats"
+#container_id = "statsonload"
 
 database_name = "webstats"
 container_name = "NumberOfWebViews"
 
-partition_key = "/id"
-row_id = '1'
+partition_key = "1"
+#row_id = '1'
 
 url = os.environ["DB_ACCOUNT_URL"]
 key = os.environ["DB_ACCOUNT_KEY"]
