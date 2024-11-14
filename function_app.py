@@ -37,7 +37,7 @@ def http_trigger2(req: func.HttpRequest) -> func.HttpResponse:
     #item = client.read_item(item=row_id)
     item = container.read_item("VisitCount", partition_key=[1])
 
-    item['VisitCount'] += 1
+    item += 1
 
     updated_item = container.upsert_item(item)
 
