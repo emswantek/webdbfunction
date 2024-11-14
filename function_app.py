@@ -9,7 +9,7 @@ import os
 database_name = "webstats"
 container_name = "NumberOfWebViews"
 
-partition_key = "1"
+#partition_key = "1"
 #row_id = '1'
 
 url = os.environ["DB_ACCOUNT_URL"]
