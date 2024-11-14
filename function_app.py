@@ -34,11 +34,11 @@ def http_trigger2(req: func.HttpRequest) -> func.HttpResponse:
 
     
     item = container.read_item("VisitCount", partition_key=[1])
-    item['VisitCount'] += 1
+    item["VisitCount"] += 1
     updated_item = container.upsert_item(item)
 
     return func.HttpResponse(
-        f"Updated number of visitors: {item['VisitCount']} ",
+        f"Updated number of visitors: {item["VisitCount"]} ",
         status_code=200
     )
         
