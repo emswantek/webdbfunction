@@ -19,6 +19,7 @@ row_id = '1'
 url = os.environ["DB_ACCOUNT_URL"]
 key = os.environ["DB_ACCOUNT_KEY"]
 
+
 client = CosmosClient(url, key)
 #client = CosmosClient(url, credential=key)
 
@@ -31,17 +32,17 @@ container = database.get_container_client(container_name)
 app = func.FunctionApp(http_auth_level=func.AuthLevel.ANONYMOUS)
 
 @app.route(route="http_trigger2")
-def http_trigger2(req: func.HttpRequest) -> func.HttpResponse:
+async def http_trigger2(req: func.HttpRequest) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
     
     #item = client.read_item(item=row_id)
-    item = container.read_item("VisitCount", partition_key="1")
+    item = await container.read_item("VisitCount", partition_key="1")
     #item = container.read_item("VisitCount")
     print("hello")
     print(item)
     item += 1
 
-    updated_item = container.upsert_item(item)
+    updated_item = await container.upsert_item(item)
 
     return func.HttpResponse(
         f"Updated number of visitors: {updated_item} ",
