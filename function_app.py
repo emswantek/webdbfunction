@@ -7,8 +7,6 @@ from azure.cosmos import exceptions
 from azure.cosmos.partition_key import PartitionKey
 import  os
 
-endpoint = "https://cloudresbackenddb.documents.azure.com:443/"
-key = "DBKEY"
 
 url = os.environ["DB_ACCOUNT_URI"]
 key = os.environ["DB_ACCOUNT_KEY"]
@@ -16,9 +14,6 @@ client = CosmosClient(url, key)
 
 # Set the total throughput (RU/s) for the database and container
 database_throughput = 1000
-
-# Singleton CosmosClient instance
-client = CosmosClient(endpoint, key)
 
 database_name = "webstats"
 container_name = "NumberOfWebViews"
