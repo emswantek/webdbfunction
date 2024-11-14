@@ -20,8 +20,6 @@ database_throughput = 1000
 # Singleton CosmosClient instance
 client = CosmosClient(endpoint, key)
 
-database_name = "webstats"
-container_name = "NumberOfWebViews"
 # [START get_container]
 database = client.get_database_client(database_name)
 container = database.get_container_client(container_name)
