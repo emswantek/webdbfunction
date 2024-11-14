@@ -1,10 +1,6 @@
 import azure.functions as func
 import logging
-import asyncio
-import uuid
 from azure.cosmos.aio import CosmosClient
-from azure.cosmos import exceptions
-from azure.cosmos.partition_key import PartitionKey
 import os
 
 database_id = "webstats"
@@ -33,13 +29,13 @@ app = func.FunctionApp(http_auth_level=func.AuthLevel.ANONYMOUS)
 
 @app.route(route="http_trigger2")
 async def http_trigger2(req: func.HttpRequest) -> func.HttpResponse:
-    logging.info('Python HTTP trigger function processed a request.')
+    logging.info('1: Python HTTP trigger function processed a request.')
     
     #item = client.read_item(item=row_id)
     item = await container.read_item("VisitCount", partition_key="1")
     #item = container.read_item("VisitCount")
-    print("hello")
-    print(item)
+    logging.info("2: hello")
+    logging.info(item)
     item += 1
 
     updated_item = await container.upsert_item(item)
