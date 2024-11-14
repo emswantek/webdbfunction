@@ -20,7 +20,7 @@ client = CosmosClient(url, key)
 #client = CosmosClient(url, credential=key)
 
 # Set the total throughput (RU/s) for the database and container
-database_throughput = 1000
+# database_throughput = 1000
 
 database = client.get_database_client(database_name)
 container = database.get_container_client(container_name)
