@@ -1,16 +1,17 @@
 import azure.functions as func
 import logging
+import asyncio
+import uuid
 from azure.cosmos.aio import CosmosClient
 from azure.cosmos import exceptions
 from azure.cosmos.partition_key import PartitionKey
-import asyncio
 
 endpoint = "https://cloudresbackenddb.documents.azure.com:443/"
 key = "DBKEY"
 
 database_id = "webstats"
 container_id = "statsonload"
-partition_key = "/VisitCount"
+partition_key = "/id"
 row_id = '1'
 
 # Set the total throughput (RU/s) for the database and container
@@ -27,7 +28,7 @@ def http_trigger2(req: func.HttpRequest) -> func.HttpResponse:
     
     item = client.read_item(item=row_id)
     item['VisitCount'] += 1
-    client.upsert_item(item)
+    CosmosClient.upsert_item(item)
 
     return func.HttpResponse(
         f"Updated number of visitors: {item['VisitCount']} ",

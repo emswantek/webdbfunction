@@ -5,3 +5,6 @@
 azure-functions
 azure-cosmos
 aiohttp
+azure-core
+azure-identity
+azure-eventhub
