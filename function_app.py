@@ -16,7 +16,7 @@ container_name = "NumberOfWebViews"
 partition_key = "/id"
 row_id = '1'
 
-url = os.environ["DB_ACCOUNT_URI"]
+url = os.environ["DB_ACCOUNT_URL"]
 key = os.environ["DB_ACCOUNT_KEY"]
 
 client = CosmosClient(url, key)
