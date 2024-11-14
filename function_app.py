@@ -35,7 +35,7 @@ def http_trigger2(req: func.HttpRequest) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
     
     #item = client.read_item(item=row_id)
-    item = container.read_item("VisitCount", partition_key="1")
+    item = container.read_item("VisitCount", partition_key=1)
     #item = container.read_item("VisitCount")
 
     item += 1
