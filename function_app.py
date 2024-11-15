@@ -3,29 +3,16 @@ import logging
 from azure.cosmos.aio import CosmosClient
 import os
 
-#database_id = "webstats"
-#container_id = "statsonload"
-
-#original DB (lines 10 - 11)
-#database_name = "webstats"
-#container_name = "NumberOfWebViews"
-#New DB (lines 13 - 14)
 database_name = "webcounter"
 container_name = "viewtracker"
-
-#partition_key = "1"
-#row_id = '1'
+item_id = "1"
+partition_key_value = "visitorCount"
 
 url = os.environ["DB_ACCOUNT_URL"]
 key = os.environ["DB_ACCOUNT_KEY"]
 
 
 client = CosmosClient(url, key)
-#client = CosmosClient(url, credential=key)
-
-# Set the total throughput (RU/s) for the database and container
-# database_throughput = 1000
-
 database = client.get_database_client(database_name)
 container = database.get_container_client(container_name)
 
@@ -48,4 +35,30 @@ async def http_trigger2(req: func.HttpRequest) -> func.HttpResponse:
         f"Updated number of visitors: {updated_item} ",
         status_code=200
     )
-        
+
+
+@app.route(route="http_trigger3")
+async def http_trigger3(req: func.HttpRequest) -> func.HttpResponse:
+    logging.info('1: Python HTTP trigger function processed a request.')
+
+    try:
+        # Read the item from the container
+        item = await container.read_item(item=item_id, partition_key=partition_key_value)
+        logging.info(f"2: {item}")
+
+        # Increment the visitor count
+        item['count'] += 1
+
+        # Upsert the item back into the container
+        updated_item = await container.upsert_item(item)
+    except Exception as e:
+        logging.error(f"Error processing the request: {str(e)}")
+        return func.HttpResponse(
+            "An error occurred while processing your request.",
+            status_code=500
+        )
+
+    return func.HttpResponse(
+        f"Updated number of visitors: {updated_item['count']}",
+        status_code=200
+    )
