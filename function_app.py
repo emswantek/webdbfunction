@@ -6,6 +6,9 @@ import os
 database_name = 'webcounter'
 container_name = 'viewtracker'
 
+item_id = '1'
+partition_key_value = 'visitorCount'
+
 url = os.environ['DB_ACCOUNT_URL']
 key = os.environ['DB_ACCOUNT_KEY']
 
@@ -23,25 +26,15 @@ app = func.FunctionApp(http_auth_level=func.AuthLevel.ANONYMOUS)
 async def http_trigger2() -> func.HttpResponse:
     logging.info('1: Python HTTP trigger function processed a request.')
 
-    item_id = '1'
-    partition_key_value = 'visitorCount'
+    # Read the item from the container
+    item = await container.read_item(item_id, partition_key=partition_key_value)
+    logging.info(f'2: {item}')
 
-    try:
-        # Read the item from the container
-        item = await container.read_item(item_id, partition_key=partition_key_value)
-        logging.info(f'2: {item}')
+    # Increment the visitor count
+    item['count'] += 1
 
-        # Increment the visitor count
-        item['count'] += 1
-
-        # Upsert the item back into the container
-        updated_item = await container.upsert_item(item)
-    except Exception as e:
-        logging.error(f'Error processing the request: {str(e)}')
-        return func.HttpResponse(
-            'An error occurred while processing your request.',
-            status_code=500
-        )
+    # Upsert the item back into the container
+    updated_item = await container.upsert_item(item)
 
     return func.HttpResponse(
         f'Updated number of visitors: {updated_item['count']}',
