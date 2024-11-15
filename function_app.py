@@ -7,11 +7,11 @@ import os
 #container_id = "statsonload"
 
 #original DB (lines 10 - 11)
-#database_name = "webstats"
-#container_name = "NumberOfWebViews"
+database_name = "webstats"
+container_name = "NumberOfWebViews"
 #New DB (lines 13 - 14)
-database_name = "SampleDB"
-container_name = "SampleContainer"
+#database_name = "SampleDB"
+#container_name = "SampleContainer"
 
 #partition_key = "1"
 #row_id = '1'
@@ -35,8 +35,10 @@ app = func.FunctionApp(http_auth_level=func.AuthLevel.ANONYMOUS)
 async def http_trigger2(req: func.HttpRequest) -> func.HttpResponse:
     logging.info('1: Python HTTP trigger function processed a request.')
     
+    item = await container.read_item("1", partition_key="/id")
     #item = client.read_item(item=row_id)
-    item = await container.read_item("1", partition_key="categoryID")
+    #Alternate attempts commented out
+    #item = await container.read_item("1", partition_key="75BF1ACB-168D-469C-9AA3-1FD26BB4EA4C")
     #item = container.read_item("VisitCount")
     logging.info("2: hello")
     logging.info(item)
