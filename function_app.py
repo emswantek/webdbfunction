@@ -12,9 +12,6 @@ partition_key_value = 'visitorCount'
 url = os.environ['DB_ACCOUNT_URL']
 key = os.environ['DB_ACCOUNT_KEY']
 
-if not url or not key:
-    raise ValueError('DB_ACCOUNT_URL and DB_ACCOUNT_KEY must be set in the environment variables.')
-
 client = CosmosClient(url, key)
 database = client.get_database_client(database_name)
 container = database.get_container_client(container_name)
@@ -23,7 +20,7 @@ app = func.FunctionApp(http_auth_level=func.AuthLevel.ANONYMOUS)
 
 
 @app.route(route='http_trigger2')
-async def http_trigger2() -> func.HttpResponse:
+async def http_trigger2(req: func.HttpRequest) -> func.HttpResponse:
     logging.info('1: Python HTTP trigger function processed a request.')
 
     # Read the item from the container
