@@ -6,8 +6,8 @@ import os
 database_name = "webcounter"
 container_name = "viewtracker"
 
-url = os.environ.get("DB_ACCOUNT_URL")
-key = os.environ.get("DB_ACCOUNT_KEY")
+url = os.environ.get["DB_ACCOUNT_URL"]
+key = os.environ.get["DB_ACCOUNT_KEY"]
 
 if not url or not key:
     raise ValueError("DB_ACCOUNT_URL and DB_ACCOUNT_KEY must be set in the environment variables.")
