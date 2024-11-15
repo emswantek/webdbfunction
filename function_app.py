@@ -36,7 +36,7 @@ async def http_trigger2(req: func.HttpRequest) -> func.HttpResponse:
     logging.info('1: Python HTTP trigger function processed a request.')
     
     #item = client.read_item(item=row_id)
-    item = await container.read_item("rownum", partition_key=1)
+    item = await container.read_item(1, partition_key="rownum")
     #item = container.read_item("VisitCount")
     logging.info("2: hello")
     logging.info(item)
