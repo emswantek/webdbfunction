@@ -41,7 +41,9 @@ async def http_trigger2(req: func.HttpRequest) -> func.HttpResponse:
 @app.route(route="http_trigger3")
 async def http_trigger3(req: func.HttpRequest) -> func.HttpResponse:
     logging.info('1: Python HTTP trigger function processed a request.')
-    jsondata = {}
+    jsondata = {
+        "count": 0,
+    }
 
     try:
         # Read the item from the container
@@ -65,6 +67,7 @@ async def http_trigger3(req: func.HttpRequest) -> func.HttpResponse:
 
     return func.HttpResponse(
         #f"Updated number of visitors: {updated_item['count']}",
-        f"{jsondata}",
+        #f"{jsondata}",
+        f"{json.dumps(jsondata)}",
         status_code=200
     )
