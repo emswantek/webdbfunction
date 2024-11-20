@@ -56,7 +56,7 @@ async def http_trigger3(req: func.HttpRequest) -> func.HttpResponse:
         # Upsert the item back into the container
         updated_item = await container.upsert_item(item)
         logging.info(f"Updated number of visitors: {updated_item['count']}"),
-        jsondata.count = updated_item["count"]
+        jsondata.update({'count': updated_item["count"]})
         
     except Exception as e:
         logging.error(f"Error processing the request: {str(e)}")
