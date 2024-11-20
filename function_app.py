@@ -1,5 +1,6 @@
 import azure.functions as func
 import logging
+import json
 from azure.cosmos.aio import CosmosClient
 import os
 
@@ -40,6 +41,7 @@ async def http_trigger2(req: func.HttpRequest) -> func.HttpResponse:
 @app.route(route="http_trigger3")
 async def http_trigger3(req: func.HttpRequest) -> func.HttpResponse:
     logging.info('1: Python HTTP trigger function processed a request.')
+    jsondata = {}
 
     try:
         # Read the item from the container
@@ -51,6 +53,9 @@ async def http_trigger3(req: func.HttpRequest) -> func.HttpResponse:
 
         # Upsert the item back into the container
         updated_item = await container.upsert_item(item)
+        logging.info(f"Updated number of visitors: {updated_item['count']}"),
+        jsondata.count = updated_item["count"]
+        
     except Exception as e:
         logging.error(f"Error processing the request: {str(e)}")
         return func.HttpResponse(
@@ -59,6 +64,7 @@ async def http_trigger3(req: func.HttpRequest) -> func.HttpResponse:
         )
 
     return func.HttpResponse(
-        f"Updated number of visitors: {updated_item['count']}",
+        #f"Updated number of visitors: {updated_item['count']}",
+        f"{jsondata}",
         status_code=200
     )
