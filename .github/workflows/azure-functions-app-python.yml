@@ -21,6 +21,9 @@ name: Deploy Python project to Azure Function App
 on:
   push:
     branches: ["main"]
+    paths-ignore:
+      - "infra/**"
+      - ".github/workflows/function-app-infra.yml"
 
 env:
   AZURE_FUNCTIONAPP_NAME: 'eswebfunctions01'   # set this to your function app name on Azure
