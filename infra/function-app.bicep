@@ -1,3 +1,4 @@
+// Version 1.0.0 retrofit
 param sites_eswebfunctions01_name string = 'eswebfunctions01'
 param components_eswebfunctions01_name string = 'eswebfunctions01'
 param serverfarms_ASP_escloudresfunctions_942c_name string = 'ASP-escloudresfunctions-942c'
