@@ -12,6 +12,10 @@ on:
       - ".github/workflows/function-app-infra.yml"
   workflow_dispatch:
 
+permissions:
+  id-token: write
+  contents: read
+
 env:
   RESOURCE_GROUP: es_cloud_res_functions
   TEMPLATE_FILE: infra/function-app.bicep
